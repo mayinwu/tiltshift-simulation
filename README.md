@@ -1,7 +1,7 @@
 # tiltshift-simulation
 Automatic tilt-shift photography
 
-## cite
+## Citation
 Image Segmentation
 
 http://cs.brown.edu/people/pfelzens/segment/index.html
