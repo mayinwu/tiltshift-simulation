@@ -21,7 +21,7 @@ Before running the program, set the command line in the properties window of the
 ### Parameters
 This program needs 4 parameters:
 1. Sigma: smooth the image, affect the segment result, recommand value - 0.5
-2. K: threshold value, affect the segment result, recommand value - 500
+2. K: threshold value for the component size, affect the segment result, recommand value - 500
 3. min_size: minimum component size, affect the segment result, recommand value - 50
 4. image: the image path
 
