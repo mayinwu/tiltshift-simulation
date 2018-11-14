@@ -15,19 +15,18 @@ https://blogs.msdn.microsoft.com/microsoft_student_partners_in_taiwan/2016/05/14
 3. 
 4. Build
 
-## Excute
+## Execute
 
-Before running the program, set the command line in the properties window of the project, EX:0.5 500 50 test1.jpg
+Before running the program, set the command line in the properties window of the project, EX:0.5 500 50 test1.jpg. The program will show the level map and final tilf-shift result and save them as jpg files.
 
+### Parameters
 This program needs 4 parameters:
 1. Sigma: smooth the image, affect the segment result, recommand value - 0.5
 2. K: threshold value, affect the segment result, recommand value - 500
 3. min_size: minimum component size, affect the segment result, recommand value - 50
 4. image: the image path
 
-The program will show the level map and final tilf-shift result and save them as jpg files.
-
-About the focus point:
+### Focus Point
 If you want to change the focus point, change the define value "focus_x" and "focus_y" in the code
 
 ## Citation
