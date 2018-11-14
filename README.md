@@ -28,6 +28,11 @@ This program needs 4 parameters:
 ### Focus Point
 If you want to change the focus point, change the define value "focus_x" and "focus_y" in the code
 
+## Example
+
+### Origin Image
+![image](https://raw.githubusercontent.com/mayinwu/tiltshift-simulation/master/test1.jpg)
+
 ## Citation
 Image Segmentation
 
