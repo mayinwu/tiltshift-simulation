@@ -33,6 +33,12 @@ If you want to change the focus point, change the define value "focus_x" and "fo
 ### Origin Image
 ![image](https://raw.githubusercontent.com/mayinwu/tiltshift-simulation/master/test1.jpg)
 
+### Blur Level Map
+![image](https://raw.githubusercontent.com/mayinwu/tiltshift-simulation/master/%5Blabel%5Dtest1.jpg)
+
+### Result
+![image](https://raw.githubusercontent.com/mayinwu/tiltshift-simulation/master/%5Bresult%5Dtest1.jpg)
+
 ## Citation
 Image Segmentation
 
