@@ -1,0 +1,114 @@
+1.流程: 
+
+	轉檔、載入圖片 -> segment_image -> stereo_ms -> 秀label值 -> blur -> 秀blur後的圖片
+
+2.各階段input,output:
+	
+	(a)轉檔、載入圖片
+		參數: sigma 
+		      k 
+		      min 
+		      input_file 
+		      output_file
+		回傳: image<rgb> *input 
+		      (圖片array)
+
+	(b)segment_image
+		參數: input
+		      sigma
+		      k
+		      min_size
+		      &num_ccs (segment塊數)
+		      represent_xy (每塊sengment的代表點)
+		      each_pix (每個pix屬於哪塊sengment)
+		      neighbor
+		回傳: 無
+
+	(c)stereo_ms
+		參數: represent_xy
+		      each_pix
+		      neighbor
+		回傳: out (一維陣列，存每塊sengment的label值)
+		(comp_data可以用represent_xy跟each_pix去算，bp可以用neighbor)
+
+	(d)blur
+		參數: out
+		      each_pix
+		回傳: result(blur完的陣列)
+
+
+===============  以下加完 stereo_ms 的部分之後  by 陳美伶  ===========
+
+1. 因為先不做data pytamid，所以先把line 41的 #define LEVELS 5 改成 #define LEVELS 1
+2. 現在stereo_ms有的功能只有: 開u、d、l、r，以及呼叫做data term的comp_data
+
+各階段input和output
+        
+       (a) comp_data
+                參數: int represent_xy[][2],
+                      vec2di &each_pix
+                回傳: image<float[VALUES]> data
+       
+       (b) bp_cb
+                參數: 
+                        image<float[VALUES]> *u
+			image<float[VALUES]> *d
+			image<float[VALUES]> *l
+			image<float[VALUES]> *r
+			vec2di neighbor
+                      	ITER  (次數)
+	        回傳:   無
+        
+	(c) output
+    	 	參數:
+			image<float[VALUES]> *u
+			image<float[VALUES]> *d
+			image<float[VALUES]> *l
+			image<float[VALUES]> *r
+			image<float[VALUES]> *data
+			
+================ 以下為加完bp_cb及comp_data後 by吳敏慈 ============================
+1.更改comp_data的計算方式，以與目標區塊的y座標位移來計算模糊程度，初始有一長條塊皆為清晰區域，可透過更改CLEARBAND來調整大小
+2.目前bp_cb那邊每個segment都給四個陣列來存要傳遞的訊息，鄰居不滿四個的msg傳遞進去的陣列元素皆為零
+
+		(a) comp_data
+                參數: int represent_xy[][2],
+                      vec2di &each_pix
+                回傳: image<float[VALUES]> data(x軸為塊數，Y軸為1)
+		(b) bp_cb
+                參數: 
+                        image<float[VALUES]> *message(x軸為塊數，Y軸為4，對應到4個neigbor傳過來的訊息)
+						image<float[VALUES]> *data
+						vec2di neighbor
+				回傳:   無
+		(a) msg
+                參數: 	float s1[VALUES],
+						float s2[VALUES],
+						float s3[VALUES],
+						float s4[VALUES],
+						float dst[VALUES]
+                回傳: 	無
+
+================ 以下為加完map_image後 by周佳蓉 ============================	
+
+1.stereo_ms的回傳值型態改成image<uchar> *out;
+
+2.新增函式map_image()，用來把每個segment的模糊程度對應到每個pixel,
+
+		(a) map_image
+		參數: image<uchar> *out, 
+		      vec2di &each_pix, 
+		      int segCnt
+                回傳: image<uchar> *label
+
+
+================ 以下為加完output後 by 陳美伶 ================================
+
+
+	(a) output
+            參數: image<float[VALUES]> *message,
+	    	  image<float[VALUES]> *data,
+		  vec2di &each_pix, 
+		  int represent_xy[][2],
+		  int 
+	    回傳: image<uchar> *output
